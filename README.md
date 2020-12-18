@@ -57,7 +57,7 @@
 | shipping_fee_status | string     | null: false                    |
 | prefecture          | string     | null: false                    |
 | scheduled_delivery  | string     | null: false                    |
-| user                | references | null: false, foreign_key: true |
+| order               | references | null: false, foreign_key: true |
 
 ### Association
 
