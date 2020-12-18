@@ -21,10 +21,6 @@
 
 | Column              | Type       | Options                        |
 | ------------------- | ---------- | ------------------------------ |
-| postal_code         | string     | null:false                     |
-| city                | string     | null: false                    |
-| address             | string     | null: false                    |
-| phone_number        | numeric    | null: false                    |
 | user                | references | null: false, foreign_key: true | 
 | item                | references | null: false, foreign_key: true |
 
@@ -41,8 +37,8 @@
 | name                | string     | null: false                    |
 | info                | text       | null: false                    |
 | price               | string     | null: false                    |
-| category            | string     | null: false                    |
-| sales_status        | string     | null: false                    |
+| category            | integer    | null: false                    |
+| sales_status        | integer    | null: false                    |
 | user                | references | null: false, foreign_key: true |
 
 ### Association
@@ -54,9 +50,13 @@
 
 | Column              | Type       | Options                        |
 | ------------------- | ---------- | ------------------------------ |
-| shipping_fee_status | string     | null: false                    |
-| prefecture          | string     | null: false                    |
-| scheduled_delivery  | string     | null: false                    |
+| postal_code         | string     | null:false                     |
+| city                | string     | null: false                    |
+| address             | string     | null: false                    |
+| phone_number        | string     | null: false                    |
+| shipping_fee_status | integer    | null: false                    |
+| prefecture          | integer    | null: false                    |
+| scheduled_delivery  | integer    | null: false                    |
 | order               | references | null: false, foreign_key: true |
 
 ### Association
