@@ -58,11 +58,8 @@
 | shipping_fee_status | string     | null: false                    |
 | prefecture          | string     | null: false                    |
 | scheduled_delivery  | string     | null: false                    |
-| content             | string     |                                |
 | user                | references | null: false, foreign_key: true |
-| room                | references | null: false, foreign_key: true |
 
 ### Association
 
-- belongs_to :room
-- belongs_to :user
+- belongs_to :order
