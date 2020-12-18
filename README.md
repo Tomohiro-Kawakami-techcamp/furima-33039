@@ -1,68 +1,24 @@
-# テーブル設計
+# README
 
-## users テーブル
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-| Column            | Type   | Options     |
-| ---------------   | ------ | ----------- |
-| nickname          | string | null: false |
-| email             | string | null: false |
-| password          | string | null: false |
-| last_name         | string | null: false |
-| first_name        | string | null: false |
-| name_kana         | string | null: false |
-| last_name_kana    | string | null: false |
-| birth             | date   | null: false |
+Things you may want to cover:
 
-### Association
+* Ruby version
 
-- has_many :items
-- has_many :orders
+* System dependencies
 
-## orders テーブル
+* Configuration
 
-| Column              | Type       | Options                        |
-| ------------------- | ---------- | ------------------------------ |
-| postal_code         | string     | null:false                     |
-| city                | string     | null: false                    |
-| address             | string     | null: false                    |
-| phone_number        | numeric    | null: false                    |
-| user                | references | null: false, foreign_key: true | 
-| item                | references | null: false, foreign_key: true |
+* Database creation
 
-### Association
+* Database initialization
 
-- belongs_to :user
-- belongs_to :item
-- has_one    :address
+* How to run the test suite
 
-## items テーブル
+* Services (job queues, cache servers, search engines, etc.)
 
-| Column              | Type       | Options                        |
-| ------------------- | ---------- | ------------------------------ |
-| name                | string     | null: false                    |
-| info                | text       | null: false                    |
-| price               | string     | null: false                    |
-| category            | string     | null: false                    |
-| sales_status        | string     | null: false                    |
-| user                | references | null: false, foreign_key: true |
+* Deployment instructions
 
-### Association
-
-- belongs_to :user
-- has_one    :order
-
-## address テーブル
-
-| Column              | Type       | Options                        |
-| ------------------- | ---------- | ------------------------------ |
-| shipping_fee_status | string     | null: false                    |
-| prefecture          | string     | null: false                    |
-| scheduled_delivery  | string     | null: false                    |
-| content             | string     |                                |
-| user                | references | null: false, foreign_key: true |
-| room                | references | null: false, foreign_key: true |
-
-### Association
-
-- belongs_to :room
-- belongs_to :user
+* ...
