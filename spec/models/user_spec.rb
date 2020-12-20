@@ -41,12 +41,6 @@ RSpec.describe User, type: :model do
       expect(@user.errors.full_messages).to include("Password can't be blank")
     end
 
-    it "passwordが6文字以上で英数字の組み合わせであれば登録できること" do
-      @user.password = "123abc"
-      @user.password_confirmation = "123abc"
-      expect(@user).to be_valid
-    end
-
     it "passwordが5文字以下であれば登録できないこと" do
       @user.password = "12345"
       @user.password_confirmation = "12345"
