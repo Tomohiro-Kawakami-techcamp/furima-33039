@@ -6,7 +6,6 @@ class User < ApplicationRecord
   has_many :items
   has_many :orders
          
-  validates :email, presence: true
   validates :password, format: { with: /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i, message: 'Include both letters and numbers' }
   validates :nickname, presence: true
   with_options presence: true, format: { with: /\A[ぁ-んァ-ヶ一-龥々]+\z/, message: 'Full-width characters' } do
