@@ -1,7 +1,9 @@
 class Item < ApplicationRecord
+  #extend ActiveHash::Associations::ActiveRecordExtensions
+  belongs_to :prefecture
   belongs_to :user
   has_one_attached :image
-
+  
   validates :image,                   presence: true
   validates :name,                    presence: true,  unless: :was_attached?
   validates :info,                    presence: true,  unless: :was_attached?
@@ -9,7 +11,7 @@ class Item < ApplicationRecord
   validates :category_id,             presence: true,  unless: :was_attached?
   validates :sales_status_id,         presence: true,  unless: :was_attached?
   validates :shipping_fee_status_id,  presence: true,  unless: :was_attached?
-  validates :prefecture_id,           presence: true,  unless: :was_attached?
+  validates :prefecture_id,           numericality: { other_than: 1 }, unless: :was_attached? 
   validates :scheduled_delivery_id,   presence: true,  unless: :was_attached?
 
   def was_attached?
