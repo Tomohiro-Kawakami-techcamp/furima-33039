@@ -8,7 +8,6 @@ RSpec.describe Item, type: :model do
 
     it "全て記入すれば登録できること" do
       expect(@item).to be_valid
-      binding.pry
     end
 
     it "imageが空では登録できないこと" do
