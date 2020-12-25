@@ -1,19 +1,31 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!,  only: :index
+  before_action :move_to_root_path, only: :index
+
   def index
     @item = Item.find(params[:item_id])
+    @order_donation = OrderDonation.new
   end
 
   def create
-    #@order = Order.create(params[:item_id])
-    #@address = Address.create(address_params)
+    @order_donation = OrderDonation.new(donation_params)
+    if @order_donation.valid?
+      @order_donation.save
+      redirect_to  root_path
+    else
+      render action: :index
+    end
   end
 
   private
-  def order_params
-    params.require(:order).permit(user_id: current_user.id, item_id: current_item.id)
+  def donation_params
+    params.require(:order_donation).permit(:postal_code, :prefecture_id, :city, :address, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id])
   end
 
-  def address_params
-    params.require(:comment).permit(:postal_code, :prefecture_id, :city, :address, :building, :phone_number).merge(order_id: params[:order_id])
+  def move_to_root_path
+    @item = Item.find(params[:item_id])
+    if current_user.id == @item.user_id || @item.order.present?
+      redirect_to root_path
+    end
   end
 end
