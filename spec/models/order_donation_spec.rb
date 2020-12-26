@@ -56,5 +56,17 @@ RSpec.describe OrderDonation, type: :model do
       @order_donation.valid?
       expect(@order_donation.errors.full_messages).to include("Phone number is less than 11 number characters")
     end
+
+    it "user_idが空だと購入できないこと" do
+      @order_donation.user_id = nil
+      @order_donation.valid?
+      expect(@order_donation.errors.full_messages).to include("User can't be blank")
+    end
+
+    it "item_idが空だと購入できないこと" do
+      @order_donation.item_id = nil
+      @order_donation.valid?
+      expect(@order_donation.errors.full_messages).to include("Item can't be blank")
+    end
   end
 end
