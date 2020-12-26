@@ -8,8 +8,10 @@ class OrdersController < ApplicationController
   end
 
   def create
+    @item = Item.find(params[:item_id])
     @order_donation = OrderDonation.new(donation_params)
     if @order_donation.valid?
+      pay_item
       @order_donation.save
       redirect_to  root_path
     else
@@ -19,7 +21,7 @@ class OrdersController < ApplicationController
 
   private
   def donation_params
-    params.require(:order_donation).permit(:postal_code, :prefecture_id, :city, :address, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id])
+    params.require(:order_donation).permit(:postal_code, :prefecture_id, :city, :address, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
   end
 
   def move_to_root_path
@@ -27,5 +29,15 @@ class OrdersController < ApplicationController
     if current_user.id == @item.user_id || @item.order.present?
       redirect_to root_path
     end
+  end
+
+  def pay_item
+    @item = Item.find(params[:item_id])
+    Payjp.api_key = "sk_test_49dae4ad86bda9ec54bad88f"
+    Payjp::Charge.create(
+      amount: @item.price,
+      card: donation_params[:token],
+      currency: 'jpy' 
+    )
   end
 end
