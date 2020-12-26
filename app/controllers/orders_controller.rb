@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!,  only: :index
-  before_action :move_to_root_path, only: :index
   before_action :set_item, only: [:index, :create]
+  before_action :move_to_root_path, only: :index
 
   def index
     @order_donation = OrderDonation.new
@@ -24,14 +24,12 @@ class OrdersController < ApplicationController
   end
 
   def move_to_root_path
-    @item = Item.find(params[:item_id])
     if current_user.id == @item.user_id || @item.order.present?
       redirect_to root_path
     end
   end
 
   def pay_item
-    @item = Item.find(params[:item_id])
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
       amount: @item.price,
