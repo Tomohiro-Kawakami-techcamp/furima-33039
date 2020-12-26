@@ -6,7 +6,12 @@ RSpec.describe OrderDonation, type: :model do
       @order_donation = FactoryBot.build(:order_donation)
     end
 
-    it "建物名以外全て記入すれば登録できること" do
+    it "全て記入すれば購入できること" do
+      expect(@order_donation).to be_valid
+    end
+
+    it "建物以外全て記入すれば購入できること" do
+      @order_donation.building = nil
       expect(@order_donation).to be_valid
     end
 
@@ -44,6 +49,12 @@ RSpec.describe OrderDonation, type: :model do
       @order_donation.phone_number = "090-1234-5678"
       @order_donation.valid?
       expect(@order_donation.errors.full_messages).to include("Phone number is Half-width number")
+    end
+
+    it "電話番号が12桁以上だと購入できないこと" do
+      @order_donation.phone_number = "090123456789"
+      @order_donation.valid?
+      expect(@order_donation.errors.full_messages).to include("Phone number is less than 11 number characters")
     end
   end
 end

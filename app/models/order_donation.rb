@@ -11,6 +11,7 @@ class OrderDonation
 
   validates :prefecture_id, numericality: { other_than: 0, message: "Select" }
   validates :phone_number,  presence: true, numericality: { with: /\A[0-9]+\z/, message: "is Half-width number" }
+  validates :phone_number, format: { with: /\A[0-9]{,11}\z/, message: "is less than 11 number characters" }
 
   def save
     order = Order.create(user_id: user_id, item_id: item_id)

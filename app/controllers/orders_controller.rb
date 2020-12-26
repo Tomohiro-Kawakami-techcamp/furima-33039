@@ -1,14 +1,13 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!,  only: :index
   before_action :move_to_root_path, only: :index
+  before_action :set_item, only: [:index, :create]
 
   def index
-    @item = Item.find(params[:item_id])
     @order_donation = OrderDonation.new
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order_donation = OrderDonation.new(donation_params)
     if @order_donation.valid?
       pay_item
@@ -33,11 +32,15 @@ class OrdersController < ApplicationController
 
   def pay_item
     @item = Item.find(params[:item_id])
-    Payjp.api_key = "sk_test_49dae4ad86bda9ec54bad88f"
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
       amount: @item.price,
       card: donation_params[:token],
       currency: 'jpy' 
     )
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
   end
 end
