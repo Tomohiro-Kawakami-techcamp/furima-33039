@@ -2,9 +2,12 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!,  except: [:index, :show]
   before_action :set_item, only: [:edit, :update, :show, :destroy]
   before_action :move_to_index, only: :edit
+  before_action :search_item, only: [:index, :search]
 
   def index
    @items = Item.all.order("created_at DESC")
+   set_item_column
+   set_category
   end
 
   def new
@@ -18,6 +21,10 @@ class ItemsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def search
+    @results = @p.result.includes(:category)
   end
 
   def show
@@ -56,5 +63,17 @@ class ItemsController < ApplicationController
     if current_user.id != @item.user_id || @item.order.present?
       redirect_to action: :index
     end
+  end
+
+  def search_item
+    @p = Item.ransack(params[:q])
+  end
+
+  def set_item_column
+    @item_name = Item.select("name").distinct
+  end
+
+  def set_category
+    @category_name = Category.name
   end
 end
